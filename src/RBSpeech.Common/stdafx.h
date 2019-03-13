@@ -10,6 +10,6 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include <Windows.h>
-
+#include <Ole2.h>
 #endif // !STDAFX_H
 // reference additional headers your program requires here

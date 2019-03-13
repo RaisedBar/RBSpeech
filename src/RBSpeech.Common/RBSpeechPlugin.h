@@ -3,7 +3,7 @@
 #pragma once
 #include "stdafx.h"
 
-public class CRBSpeechPlugin
+class CRBSpeechPlugin
 {
 public:
 	virtual HRESULT IsPluginForAnAssistiveTechnology() = 0;

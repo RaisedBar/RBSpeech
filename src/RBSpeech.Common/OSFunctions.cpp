@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "OSFunctions.h"
 
-HRESULT RaisedBar::RBSpeech::OSFunctions::IsScreenReaderActive()
+HRESULT RaisedBar::RBSpeech::OSFunctions::IsAScreenReaderActive()
 {
 	HRESULT hr = S_OK;
 	bool bResult = false;

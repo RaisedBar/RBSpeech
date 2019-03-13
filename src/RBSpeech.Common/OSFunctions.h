@@ -12,7 +12,7 @@ namespace RaisedBar
 {
 		namespace OSFunctions
 		{
-			HRESULT IsScreenReaderActive();
+			HRESULT IsAScreenReaderActive();
 
 }
 	}

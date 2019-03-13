@@ -5,7 +5,19 @@
 #include "RBSpeechPlugin.h"
 #include <Ole2.h>
 
-class CRBSpeechNVDAPlugin : CRBSpeechPlugin
+// Boost includes.
+#include <boost/dll/alias.hpp> // for BOOST_DLL_ALIAS   
+#include <boost/dll/shared_library.hpp>
+namespace RaisedBar {
+	namespace RBSpeech {
+		namespace Plugins {
+//typedefs.
+typedef error_status_t(WINAPI *nvdaControllerTestIfRunningFunc)(void);
+typedef error_status_t(WINAPI *nvdaControllerCancelSpeechFunc)(void);
+typedef error_status_t(WINAPI *nvdaControllerSpeakTextFunc)(const wchar_t *text);
+typedef error_status_t(WINAPI *nvdaControllerBrailleMessageFunc)(const wchar_t *message);
+
+class CRBSpeechNVDAPlugin : public CRBSpeechPlugin
 {
 public:
 	HRESULT IsPluginForAnAssistiveTechnology();
@@ -13,12 +25,34 @@ public:
 	HRESULT Silence();
 	HRESULT SpeakText(BSTR text, VARIANT_BOOL silence);
 	HRESULT BrailleText(BSTR text);
+//Factory method.
+	static std::shared_ptr<CRBSpeechNVDAPlugin> create() {
+		return std::shared_ptr<CRBSpeechNVDAPlugin>(
+			new CRBSpeechNVDAPlugin()
+			);
+	}
 
 private:
 	HRESULT IsAPILoaded();
 	HRESULT LoadAPI();
 	HRESULT UnloadAPI();
-};
+//private fields.
+private:
+	boost::dll::shared_library NvdaDllApi;
+	nvdaControllerTestIfRunningFunc TestIfRunning;
+	nvdaControllerCancelSpeechFunc CancelSpeech;
+	nvdaControllerSpeakTextFunc SpeakMessage;
+	nvdaControllerBrailleMessageFunc BrailleMessage;
+	bool isAPILoaded =false;
+	};
+
+BOOST_DLL_ALIAS(
+	RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::create, // <-- this function is exported with...
+	create_plugin                               // <-- ...this alias name
+)
+
+		}
+	}
+}
+
 #endif // !RBSPEECH_NVDA_PLUGIN_H
-
-

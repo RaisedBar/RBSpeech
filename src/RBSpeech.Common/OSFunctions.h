@@ -2,6 +2,9 @@
 #define OS_FUNCTIONS_H
 #pragma once
 #include "stdafx.h"
+//WiX includes.
+#include <dutil.h>
+#include "WiXMacros.h"
 
 namespace RaisedBar
 {

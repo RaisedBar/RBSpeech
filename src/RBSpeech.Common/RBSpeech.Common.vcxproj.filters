@@ -27,6 +27,9 @@
     <ClInclude Include="OSFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WiXMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

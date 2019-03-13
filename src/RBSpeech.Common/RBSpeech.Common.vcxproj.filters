@@ -24,9 +24,15 @@
     <ClInclude Include="RBSpeechPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OSFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OSFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

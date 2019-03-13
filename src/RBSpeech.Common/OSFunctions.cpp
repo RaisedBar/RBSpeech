@@ -16,5 +16,10 @@ LExit:
 
 HRESULT RaisedBar::RBSpeech::OSFunctions::IsWindowAvailable(__in_z LPCWSTR wzClass, __in_z LPCWSTR wzWindowName)
 {
-	return S_FALSE;
+	HRESULT hr = S_OK;
+	HWND hWindow = nullptr;
+	hWindow = FindWindow(wzClass, wzWindowName);
+	ExitOnNull(hWindow, hr, S_FALSE, "The window with the requested class and/or name is not present.");
+LExit:
+	return hr;
 }

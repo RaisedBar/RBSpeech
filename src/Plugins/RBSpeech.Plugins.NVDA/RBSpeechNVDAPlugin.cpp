@@ -102,8 +102,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::LoadAPI()
 	HRESULT hr = S_OK;
 	LPWSTR sczCurrentPath = NULL;
 	path NVDADllFileName ;
-	//Change the following line once we have an ExitOnSuccess macro.
-	ExitOnSpecificValue(IsAPILoaded(), S_OK, hr, S_OK, "The NVDA API is already loaded.");
+	hr = IsAPILoaded();
+	ExitOnSuccess(hr, "The NVDA API is already loaded.");
 	hr = PathForCurrentProcess(&sczCurrentPath, NULL);
 	ExitOnFailure(hr, "Failed to get current process path.");
 	NVDADllFileName = sczCurrentPath;
@@ -150,7 +150,7 @@ ExitOnNotNull(SpeakMessage, hr, S_FALSE, "The speak message function could not b
 ExitOnNull(TestIfRunning, hr, S_FALSE, "The test if running function is already null.");
 TestIfRunning = nullptr;
 ExitOnNotNull(TestIfRunning, hr, S_FALSE, "The test if running function could not be released.");
-
-	LExit:
+isAPILoaded = false;
+LExit:
 	return hr;
 }

@@ -13,3 +13,8 @@ HRESULT RaisedBar::RBSpeech::OSFunctions::IsAScreenReaderActive()
 LExit:
 	return hr;
 }
+
+HRESULT RaisedBar::RBSpeech::OSFunctions::IsWindowAvailable(__in_z LPCWSTR wzClass, __in_z LPCWSTR wzWindowName)
+{
+	return S_FALSE;
+}

@@ -13,7 +13,7 @@ namespace RaisedBar
 		namespace OSFunctions
 		{
 			HRESULT IsAScreenReaderActive();
-
+			HRESULT IsWindowAvailable(__in_z LPCWSTR wzClass, __in_z LPCWSTR wzWindowName);
 }
 	}
 }

@@ -58,7 +58,14 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::SpeakText(BSTR text, 
 		hr = LoadAPI();
 		ExitOnFailure(hr, "The NVDA API could not be loaded.");
 	}
-
+	
+	if (silence == VARIANT_TRUE)
+	{
+		//Silence any existing speech.
+		hr = Silence();
+		ExitOnFailure(hr, "Unable to silence existing speech.");
+}
+	
 	ExitIfValueNotEqualToSuppliedValue(SpeakMessage(text), 0, hr, S_FALSE, "Speaking through NVDA failed.");
 LExit:
 	return hr;

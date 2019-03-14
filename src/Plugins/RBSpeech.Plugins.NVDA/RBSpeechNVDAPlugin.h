@@ -3,7 +3,12 @@
 #pragma once
 #include "stdafx.h"
 #include "RBSpeechPlugin.h"
+
+//Windows includes:
 #include <Ole2.h>
+
+//Standard C++ includes.
+#include <memory>
 
 // Boost includes.
 #include <boost/dll/alias.hpp> // for BOOST_DLL_ALIAS   
@@ -27,9 +32,7 @@ public:
 	HRESULT BrailleText(BSTR text);
 //Factory method.
 	static std::shared_ptr<CRBSpeechNVDAPlugin> create() {
-		return std::shared_ptr<CRBSpeechNVDAPlugin>(
-			new CRBSpeechNVDAPlugin()
-			);
+		return std::make_shared<CRBSpeechNVDAPlugin>();
 	}
 
 private:

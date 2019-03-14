@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{EB2C
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.NVDA", "src\Plugins\RBSpeech.Plugins.NVDA\RBSpeech.Plugins.NVDA.vcxproj", "{1B0DD624-628D-453B-855C-3B24A5F1BE35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.SystemAccess", "src\Plugins\RBSpeech.Plugins.SystemAccess\RBSpeech.Plugins.SystemAccess.vcxproj", "{CE566DCA-F804-4455-A7E0-6865D70AB60F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +37,14 @@ Global
 		{1B0DD624-628D-453B-855C-3B24A5F1BE35}.Release|x64.Build.0 = Release|x64
 		{1B0DD624-628D-453B-855C-3B24A5F1BE35}.Release|x86.ActiveCfg = Release|Win32
 		{1B0DD624-628D-453B-855C-3B24A5F1BE35}.Release|x86.Build.0 = Release|Win32
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Debug|x64.ActiveCfg = Debug|x64
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Debug|x64.Build.0 = Debug|x64
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Debug|x86.ActiveCfg = Debug|Win32
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Debug|x86.Build.0 = Debug|Win32
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Release|x64.ActiveCfg = Release|x64
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Release|x64.Build.0 = Release|x64
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Release|x86.ActiveCfg = Release|Win32
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +53,7 @@ Global
 		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {D23424F0-2FE0-4687-8B5F-3B8D3B4A17DA}
 		{EB2C56D9-449C-42AD-8A9D-8574C47884B0} = {D23424F0-2FE0-4687-8B5F-3B8D3B4A17DA}
 		{1B0DD624-628D-453B-855C-3B24A5F1BE35} = {EB2C56D9-449C-42AD-8A9D-8574C47884B0}
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F} = {EB2C56D9-449C-42AD-8A9D-8574C47884B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4FFC6F0-4D65-42E7-99CA-53DACD314909}

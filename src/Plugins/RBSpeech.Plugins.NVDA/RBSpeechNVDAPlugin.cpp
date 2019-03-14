@@ -19,13 +19,9 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::IsPluginForAnAssistiv
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
-	hr = IsAPILoaded();
-	if (hr == S_FALSE)
-	{
-		hr = LoadAPI();
-		ExitOnFailure(hr, "The NVDA API could not be loaded.");
-}
-	
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+
 	ExitIfValueNotEqualToSuppliedValue(TestIfRunning(), 0, hr, S_FALSE, "NVDA is not running.");
 LExit:
 	return hr;
@@ -34,12 +30,8 @@ LExit:
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::Silence()
 {
 	HRESULT hr = S_OK;
-	hr = IsAPILoaded();
-	if (hr == S_FALSE)
-	{
-		hr = LoadAPI();
-		ExitOnFailure(hr, "The NVDA API could not be loaded.");
-	}
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The NVDA API could not e loaded.");
 
 	ExitIfValueNotEqualToSuppliedValue(CancelSpeech(), 0, hr, S_FALSE, "Silencing NVDA failed.");
 LExit:
@@ -52,13 +44,9 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::SpeakText(BSTR text, 
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be spoken was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be spoken was an empty string.");
 
-	hr = IsAPILoaded();
-	if (hr == S_FALSE)
-	{
-		hr = LoadAPI();
-		ExitOnFailure(hr, "The NVDA API could not be loaded.");
-	}
-	
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+
 	if (silence == VARIANT_TRUE)
 	{
 		//Silence any existing speech.
@@ -77,12 +65,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::BrailleText(BSTR text
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be brailled was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be brailled was an empty string.");
 
-	hr = IsAPILoaded();
-	if (hr == S_FALSE)
-	{
-		hr = LoadAPI();
-		ExitOnFailure(hr, "The NVDA API could not be loaded.");
-	}
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The NVDA API could not e loaded.");
 
 	ExitIfValueNotEqualToSuppliedValue(BrailleMessage(text), 0, hr, S_FALSE, "brailling through NVDA failed.");
 LExit:

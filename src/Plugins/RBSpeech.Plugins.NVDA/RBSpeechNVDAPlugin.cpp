@@ -134,6 +134,9 @@ ExitOnNotNull(SpeakMessage, hr, S_FALSE, "The speak message function could not b
 ExitOnNull(TestIfRunning, hr, S_FALSE, "The test if running function is already null.");
 TestIfRunning = nullptr;
 ExitOnNotNull(TestIfRunning, hr, S_FALSE, "The test if running function could not be released.");
+ExitOnFalse(NvdaDllApi.is_loaded(), hr, S_FALSE, "The nvda dll file is not loaded.");
+NvdaDllApi.unload();
+ExitOnTrue(NvdaDllApi.is_loaded(), hr, S_FALSE, "The NVDA dll is still loaded.");
 isAPILoaded = false;
 LExit:
 	return hr;

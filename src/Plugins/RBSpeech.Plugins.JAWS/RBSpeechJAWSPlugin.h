@@ -5,7 +5,7 @@
 #include "RBSpeechPlugin.h"
 
 //Windows includes:
-#include <Ole2.h>
+#include <atlbase.h>
 
 //Standard C++ includes.
 #include <memory>
@@ -35,8 +35,8 @@ namespace RaisedBar {
 				HRESULT UnloadAPI();
 				//private fields.
 			private:
-
-				bool isAPILoaded = false;
+				CComDispatchDriver JawsAPI;
+				HRESULT isAPILoaded = false;
 			};
 
 			BOOST_DLL_ALIAS(

@@ -16,6 +16,11 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsPluginForAnAssis
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The Dolphin API could not be loaded.");
+	currentDolphinProduct = DolAccess_GetSystem();
+	ExitOnSpecificValue(currentDolphinProduct, 0, hr, S_FALSE, "A dolphin product is not running.");
+LExit:
 	return hr;
 }
 
@@ -33,7 +38,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::SpeakText(BSTR tex
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::BrailleText(BSTR text)
 {
-	HRESULT hr = S_OK;
+	HRESULT hr =E_NOTIMPL;
+	LExit:
 	return hr;
 }
 
@@ -41,7 +47,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsAPILoaded()
 {
 	HRESULT hr = S_OK;
 	hr = isAPILoaded;
-	ExitOnFailure(hr, "The NVDA API is not loaded.");
+	ExitOnFailure(hr, "The Dolphin API is not loaded.");
 LExit:
 	return hr;
 }

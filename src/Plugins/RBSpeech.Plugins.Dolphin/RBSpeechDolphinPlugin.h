@@ -44,6 +44,7 @@ namespace RaisedBar {
 				DolAccess_ActionFunc DolAccess_Action;
 				DolAccess_CommandFunc DolAccess_Command;
 				HRESULT isAPILoaded = S_FALSE;
+				DWORD currentDolphinProduct = -1;
 			};
 
 			BOOST_DLL_ALIAS(

@@ -27,6 +27,24 @@ namespace RaisedBar {
 #define DOLACCESS_SUPERNOVA 4
 #define DOLACCESS_LUNARPLUS 8
 
+			//return codes from functions other than DolAccess_GetSystem
+#define DOLACCESS_SUCCESS						0
+#define DOLACCESS_FAIL_NO_SERVER				1
+#define DOLACCESS_FAIL_INVALID_ID				2
+#define DOLACCESS_FAIL_BAD_LEN					3
+#define DOLACCESS_FAIL_INVALID_ACTION			4
+#define DOLACCESS_FAIL_NOT_SUPPORTED_BY_SERVER	5
+#define DOLACCESS_FAIL_BAD_STRING				6
+#define DOLACCESS_FAIL_TIMED_OUT				7
+#define DOLACCESS_FAIL_READ_ONLY				8
+#define DOLACCESS_FAIL_SERVER_BUSY				9
+
+			// id's for DolAccess_Command 
+#define DOLAPI_COMMAND_SPEAK 1
+#define DOLAPI_COMMAND_LOAD_SCRIPT 2
+#define DOLAPI_COMMAND_UNLOAD_SCRIPT 3
+#define DOLAPI_COMMAND_SCRIPT_FUNCTION 4
+
 			class CRBSpeechDolphinPlugin : public CRBSpeechPlugin
 			{
 			public:

@@ -28,12 +28,33 @@ LExit:
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::Silence()
 {
 	HRESULT hr = S_OK;
+	DWORD dwDolphinFunctionReturnCode = -1;
+	hr = CanDolphinProductSpeak();
+	ExitOnFailure(hr, "The currently active dolphin product is unable to stop speaking.");
+	dwDolphinFunctionReturnCode = DolAccess_Action(141);
+	ExitIfValueGreaterThanSuppliedValue(dwDolphinFunctionReturnCode, DOLACCESS_SUCCESS, hr, S_FALSE, "Unable to silence the current dolphin product.");
+LExit:
 	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::SpeakText(BSTR text, VARIANT_BOOL silence)
 {
 	HRESULT hr = S_OK;
+	DWORD dwDolphinFunctionReturnCode = -1;
+	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be spoken was not provided.");
+	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be spoken was an empty string.");
+	hr = CanDolphinProductSpeak();
+	ExitOnFailure(hr, "The currently active Dolphin product was unable to produce speech.");
+
+	if (silence == VARIANT_TRUE)
+	{
+		//Silence any existing speech.
+		hr = Silence();
+		ExitOnFailure(hr, "Unable to silence existing speech.");
+	}
+	dwDolphinFunctionReturnCode = DolAccess_Command((VOID *)text, SysStringLen(text), DOLAPI_COMMAND_SPEAK);
+	ExitIfValueGreaterThanSuppliedValue(dwDolphinFunctionReturnCode, DOLACCESS_SUCCESS, hr, S_FALSE, "Unable to speak text through the current Dolphin product.");
+LExit:
 	return hr;
 }
 

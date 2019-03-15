@@ -16,10 +16,11 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsPluginForAnAssis
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
+	DWORD dwCurrentDolphinProduct = -1;
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The Dolphin API could not be loaded.");
-	currentDolphinProduct = DolAccess_GetSystem();
-	ExitOnSpecificValue(currentDolphinProduct, 0, hr, S_FALSE, "A dolphin product is not running.");
+	hr = GetActualDolphinProduct(&dwCurrentDolphinProduct);
+	ExitOnSpecificValue(dwCurrentDolphinProduct, 0, hr, S_FALSE, "A dolphin product is not running.");
 LExit:
 	return hr;
 }
@@ -104,6 +105,34 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::UnloadAPI()
 	DolphinDllApi.unload();
 	ExitOnTrue(DolphinDllApi.is_loaded(), hr, S_FALSE, "The Dolphin dll is still loaded.");
 	isAPILoaded = S_FALSE;
+LExit:
+	return hr;
+}
+
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::CanDolphinProductSpeak()
+{
+	HRESULT hr = S_OK;
+	DWORD dwCurrentDolphinProduct = -1;
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The Dolphin API could not be loaded.");
+	hr = GetActualDolphinProduct(&dwCurrentDolphinProduct);
+	if (dwCurrentDolphinProduct != DOLACCESS_HAL || dwCurrentDolphinProduct != DOLACCESS_SUPERNOVA || dwCurrentDolphinProduct != DOLACCESS_LUNARPLUS)
+	{
+		hr = S_FALSE;
+		ExitOnFailure(hr, "The currently active Dolphin product is not able to speak.");
+	}
+		LExit:
+	return hr;
+}
+
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::GetActualDolphinProduct(__out DWORD *pdwActualProduct)
+{
+	HRESULT hr = S_OK;
+	DWORD currentDolphinProduct = -1;
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The Dolphin API could not be loaded.");
+	currentDolphinProduct = DolAccess_GetSystem();
+	*pdwActualProduct = currentDolphinProduct;
 LExit:
 	return hr;
 }

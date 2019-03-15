@@ -19,6 +19,13 @@ namespace RaisedBar {
 			typedef DWORD (WINAPI *DolAccess_GetSystemFunc)(void);
 			typedef DWORD (WINAPI *DolAccess_ActionFunc)(DWORD Id);
 			typedef DWORD(WINAPI *DolAccess_CommandFunc)(VOID *Par, DWORD Len, DWORD Id);
+			
+			// return codes from DolAccess_GetSystem
+#define DOLACCESS_NONE 0
+#define DOLACCESS_HAL 1
+#define DOLACCESS_LUNAR 2
+#define DOLACCESS_SUPERNOVA 4
+#define DOLACCESS_LUNARPLUS 8
 
 			class CRBSpeechDolphinPlugin : public CRBSpeechPlugin
 			{
@@ -37,6 +44,9 @@ namespace RaisedBar {
 				HRESULT IsAPILoaded();
 				HRESULT LoadAPI();
 				HRESULT UnloadAPI();
+				HRESULT CanDolphinProductSpeak();
+				HRESULT GetActualDolphinProduct(__out DWORD *pdwActualProduct);
+
 				//private fields.
 			private:
 				boost::dll::shared_library DolphinDllApi;
@@ -44,7 +54,6 @@ namespace RaisedBar {
 				DolAccess_ActionFunc DolAccess_Action;
 				DolAccess_CommandFunc DolAccess_Command;
 				HRESULT isAPILoaded = S_FALSE;
-				DWORD currentDolphinProduct = -1;
 			};
 
 			BOOST_DLL_ALIAS(

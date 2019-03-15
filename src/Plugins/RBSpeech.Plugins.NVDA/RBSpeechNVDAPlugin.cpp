@@ -20,7 +20,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The NVDA API could not be loaded.");
 
 	ExitIfValueNotEqualToSuppliedValue(TestIfRunning(), 0, hr, S_FALSE, "NVDA is not running.");
 LExit:
@@ -31,8 +31,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::Silence()
 {
 	HRESULT hr = S_OK;
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
-
+	ExitOnFailure(hr, "The NVDA API could not be loaded.");
+	
 	ExitIfValueNotEqualToSuppliedValue(CancelSpeech(), 0, hr, S_FALSE, "Silencing NVDA failed.");
 LExit:
 	return hr;
@@ -45,7 +45,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::SpeakText(BSTR text, 
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be spoken was an empty string.");
 
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The NVDA API could not be loaded.");
 
 	if (silence == VARIANT_TRUE)
 	{
@@ -66,7 +66,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::BrailleText(BSTR text
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be brailled was an empty string.");
 
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The NVDA API could not be loaded.");
 
 	ExitIfValueNotEqualToSuppliedValue(BrailleMessage(text), 0, hr, S_FALSE, "brailling through NVDA failed.");
 LExit:

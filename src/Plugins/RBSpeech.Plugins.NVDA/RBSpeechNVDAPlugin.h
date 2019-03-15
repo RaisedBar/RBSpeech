@@ -41,7 +41,7 @@ private:
 	HRESULT UnloadAPI();
 //private fields.
 private:
-	boost::dll::shared_library NvdaDllApi;
+	boost::dll::shared_library NVDADllApi;
 	nvdaControllerTestIfRunningFunc TestIfRunning;
 	nvdaControllerCancelSpeechFunc CancelSpeech;
 	nvdaControllerSpeakTextFunc SpeakMessage;

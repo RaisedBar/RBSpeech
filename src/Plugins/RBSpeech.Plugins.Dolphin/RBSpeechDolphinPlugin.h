@@ -9,10 +9,17 @@
 
 //boost includes.
 #include <boost/dll/alias.hpp>
+#include <boost/dll/shared_library.hpp>
 
 namespace RaisedBar {
 	namespace RBSpeech {
 		namespace Plugins {
+			//Typedefs.
+			//typedefs.
+			typedef DWORD (WINAPI *DolAccess_GetSystemFunc)(void);
+			typedef DWORD (WINAPI *DolAccess_ActionFunc)(DWORD Id);
+			typedef DWORD(WINAPI *DolAccess_CommandFunc)(VOID *Par, DWORD Len, DWORD Id);
+
 			class CRBSpeechDolphinPlugin : public CRBSpeechPlugin
 			{
 			public:
@@ -32,7 +39,11 @@ namespace RaisedBar {
 				HRESULT UnloadAPI();
 				//private fields.
 			private:
-				bool isAPILoaded = false;
+				boost::dll::shared_library DolphinDllApi;
+				DolAccess_GetSystemFunc DolAccess_GetSystem;
+				DolAccess_ActionFunc DolAccess_Action;
+				DolAccess_CommandFunc DolAccess_Command;
+				HRESULT isAPILoaded = S_FALSE;
 			};
 
 			BOOST_DLL_ALIAS(

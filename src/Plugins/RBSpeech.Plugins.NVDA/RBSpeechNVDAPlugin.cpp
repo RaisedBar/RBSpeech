@@ -101,17 +101,17 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::LoadAPI()
 //Check file existence.
 	ExitOnFalse(exists(NVDADllFileName), hr, E_FILENOTFOUND, "The NVDA dll file is not found.");
 	//The dll file exists, so try to load it.
-	NvdaDllApi.load(NVDADllFileName.generic_wstring());
-	ExitOnFalse(NvdaDllApi.is_loaded(), hr, S_FALSE, "The nvda dll file could not be loaded.");
+	NVDADllApi.load(NVDADllFileName.generic_wstring());
+	ExitOnFalse(NVDADllApi.is_loaded(), hr, S_FALSE, "The nvda dll file could not be loaded.");
 //Load the functions we need.
-	ExitOnFalse(NvdaDllApi.has("nvdaController_testIfRunning"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_testIfRunning function.");
-	TestIfRunning = NvdaDllApi.get<nvdaControllerTestIfRunningFunc>("nvdaController_testIfRunning");
-	ExitOnFalse(NvdaDllApi.has("nvdaController_speakText"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_speakText function.");
-	SpeakMessage = NvdaDllApi.get<nvdaControllerSpeakTextFunc>("nvdaController_speakText");
-	ExitOnFalse(NvdaDllApi.has("nvdaController_brailleMessage"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_brailleMessage function.");	
-	BrailleMessage = NvdaDllApi.get<nvdaControllerBrailleMessageFunc>("nvdaController_brailleMessage");
-	ExitOnFalse(NvdaDllApi.has("nvdaController_cancelSpeech"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_cancelSpeech function.");
-	CancelSpeech = NvdaDllApi.get<nvdaControllerCancelSpeechFunc>("nvdaController_cancelSpeech");
+	ExitOnFalse(NVDADllApi.has("nvdaController_testIfRunning"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_testIfRunning function.");
+	TestIfRunning = NVDADllApi.get<nvdaControllerTestIfRunningFunc>("nvdaController_testIfRunning");
+	ExitOnFalse(NVDADllApi.has("nvdaController_speakText"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_speakText function.");
+	SpeakMessage = NVDADllApi.get<nvdaControllerSpeakTextFunc>("nvdaController_speakText");
+	ExitOnFalse(NVDADllApi.has("nvdaController_brailleMessage"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_brailleMessage function.");
+	BrailleMessage = NVDADllApi.get<nvdaControllerBrailleMessageFunc>("nvdaController_brailleMessage");
+	ExitOnFalse(NVDADllApi.has("nvdaController_cancelSpeech"), hr, S_FALSE, "The NVDA dll does not export the nvdaController_cancelSpeech function.");
+	CancelSpeech = NVDADllApi.get<nvdaControllerCancelSpeechFunc>("nvdaController_cancelSpeech");
 	isAPILoaded = true;
 LExit:
 	return hr;
@@ -134,9 +134,9 @@ ExitOnNotNull(SpeakMessage, hr, S_FALSE, "The speak message function could not b
 ExitOnNull(TestIfRunning, hr, S_FALSE, "The test if running function is already null.");
 TestIfRunning = nullptr;
 ExitOnNotNull(TestIfRunning, hr, S_FALSE, "The test if running function could not be released.");
-ExitOnFalse(NvdaDllApi.is_loaded(), hr, S_FALSE, "The nvda dll file is not loaded.");
-NvdaDllApi.unload();
-ExitOnTrue(NvdaDllApi.is_loaded(), hr, S_FALSE, "The NVDA dll is still loaded.");
+ExitOnFalse(NVDADllApi.is_loaded(), hr, S_FALSE, "The nvda dll file is not loaded.");
+NVDADllApi.unload();
+ExitOnTrue(NVDADllApi.is_loaded(), hr, S_FALSE, "The NVDA dll is still loaded.");
 isAPILoaded = false;
 LExit:
 	return hr;

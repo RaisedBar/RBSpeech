@@ -6,7 +6,7 @@
 
 //C++ standard includes.
 #include <filesystem>
-using namespace std::experimental::filesystem;
+using namespace std::filesystem;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsPluginForAnAssistiveTechnology()
 {

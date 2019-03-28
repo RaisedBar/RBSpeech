@@ -7,6 +7,7 @@
 
 //Standard C++ includes.
 #include <string>
+#include <optional>
 
 //Boost included.
 #include <boost/format.hpp>
@@ -80,6 +81,11 @@ wformat formattedBraillingFunction(L"BrailleMessage(%1%, 2000);");
 	LExit:
 	return hr;
 	}
+
+std::optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::GetAssistiveTechnologyExecutable()
+{
+	return nullopt;
+}
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsAPILoaded()
 {

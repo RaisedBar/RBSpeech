@@ -9,6 +9,8 @@
 
 //Standard C++ includes.
 #include <memory>
+#include <optional>
+#include <string>
 
 // Boost includes.
 #include <boost/dll/alias.hpp> // for BOOST_DLL_ALIAS   
@@ -30,7 +32,8 @@ public:
 	HRESULT Silence();
 	HRESULT SpeakText(BSTR text, VARIANT_BOOL silence);
 	HRESULT BrailleText(BSTR text);
-//Factory method.
+	std::optional<std::wstring> GetAssistiveTechnologyExecutable();
+	//Factory method.
 	static std::shared_ptr<CRBSpeechNVDAPlugin> create() {
 		return std::make_shared<CRBSpeechNVDAPlugin>();
 	}

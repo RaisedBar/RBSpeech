@@ -6,6 +6,8 @@
 
 //C++ standard includes.
 #include <filesystem>
+
+using namespace std;
 using namespace std::filesystem;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsPluginForAnAssistiveTechnology()
@@ -128,6 +130,11 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::UnloadAPI()
 	isAPILoaded = S_FALSE;
 LExit:
 	return hr;
+}
+
+optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::GetAssistiveTechnologyExecutable()
+{
+	return nullopt;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::CanDolphinProductSpeak()

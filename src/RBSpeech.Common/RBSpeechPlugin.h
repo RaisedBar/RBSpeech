@@ -3,6 +3,8 @@
 #pragma once
 #include "stdafx.h"
 #include "WiXMacros.h"
+#include <string>
+#include <optional>
 
 class CRBSpeechPlugin
 {
@@ -12,6 +14,7 @@ public:
 	virtual HRESULT Silence() = 0;
 	virtual HRESULT SpeakText(BSTR text, VARIANT_BOOL silence) = 0;
 	virtual HRESULT BrailleText(BSTR text) = 0;
+	virtual std::optional<std::wstring> GetAssistiveTechnologyExecutable() = 0;
 protected:
 	HRESULT CheckAndLoadAPI();
 	

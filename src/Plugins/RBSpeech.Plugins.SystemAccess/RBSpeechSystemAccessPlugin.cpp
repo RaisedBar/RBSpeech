@@ -6,6 +6,7 @@
 
 //Standard C++ includes.
 #include <filesystem>
+using namespace std;
 using namespace std::filesystem;
 
 //Boost includes.
@@ -71,6 +72,11 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::BrailleText(B
 	ExitOnFalse(SABraille, hr, S_FALSE, "brailling through System Access failed.");
 LExit:
 	return hr;
+}
+
+optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::GetAssistiveTechnologyExecutable()
+{
+	return nullopt;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsAPILoaded()

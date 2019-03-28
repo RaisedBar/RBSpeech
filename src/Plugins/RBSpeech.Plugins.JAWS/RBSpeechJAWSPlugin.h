@@ -9,9 +9,13 @@
 
 //Standard C++ includes.
 #include <memory>
+#include <string>
+#include <optional>
 
 //boost includes.
 #include <boost/dll/alias.hpp>
+
+
 
 namespace RaisedBar {
 	namespace RBSpeech {
@@ -24,6 +28,7 @@ namespace RaisedBar {
 				HRESULT Silence();
 				HRESULT SpeakText(BSTR text, VARIANT_BOOL silence);
 				HRESULT BrailleText(BSTR text);
+				std::optional<std::wstring> GetAssistiveTechnologyExecutable();
 				//Factory method.
 				static std::shared_ptr<CRBSpeechJAWSPlugin> create() {
 					return std::make_shared<CRBSpeechJAWSPlugin>();

@@ -76,7 +76,7 @@ LExit:
 
 optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::GetAssistiveTechnologyExecutable()
 {
-	return nullopt;
+	return L"nvda.exe";
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechNVDAPlugin::IsAPILoaded()

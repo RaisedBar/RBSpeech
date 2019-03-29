@@ -76,7 +76,7 @@ LExit:
 
 optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::GetAssistiveTechnologyExecutable()
 {
-	return nullopt;
+	return L"sa.exe";
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsAPILoaded()

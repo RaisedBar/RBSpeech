@@ -5,11 +5,7 @@
 //Windows/ATL includes.
 #include <comutil.h>
 
-//Standard C++ includes.
-#include <string>
-#include <optional>
-
-//Boost included.
+//Boost includes.
 #include <boost/format.hpp>
 
 using namespace RaisedBar::RBSpeech::OSFunctions;
@@ -84,7 +80,7 @@ wformat formattedBraillingFunction(L"BrailleMessage(%1%, 2000);");
 
 std::optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::GetAssistiveTechnologyExecutable()
 {
-	return nullopt;
+	return L"jfw.exe";
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsAPILoaded()

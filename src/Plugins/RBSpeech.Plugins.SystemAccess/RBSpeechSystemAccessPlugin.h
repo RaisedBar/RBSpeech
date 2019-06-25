@@ -12,6 +12,7 @@
 #include <optional>
 #include <string>
 
+#define BOOST_DLL_USE_STD_FS
 // Boost includes.
 #include <boost/dll/alias.hpp> // for BOOST_DLL_ALIAS   
 #include <boost/dll/shared_library.hpp>

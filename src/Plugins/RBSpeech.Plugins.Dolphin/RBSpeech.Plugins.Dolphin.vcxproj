@@ -72,16 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);c:\program files\boost;C:\Program Files (x86)\WiX Toolset v4.0\SDK\VS2017\inc;</IncludePath>
-    <LibraryPath>$(SolutionDir)\$(Configuration);C:\Program Files (x86)\WiX Toolset v4.0\SDK\VS2017\lib\x86;C:\Program Files\boost\lib\32-bit;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\WiX Toolset v3.11\SDK\VS2017\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);c:\program files\boost</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\WiX Toolset v3.11\SDK\VS2017\lib\x86;$(SolutionDir)\$(Configuration);C:\Program Files\boost\lib\32-bit;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files\boost;C:\Program Files (x86)\WiX Toolset v4.0\SDK\VS2017\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\WiX Toolset v4.0\SDK\VS2017\lib\x86;C:\Program Files\boost\lib\32-bit;$(LibraryPath);$(SolutionDir)\$(Configuration);</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\WiX Toolset v3.11\SDK\VS2017\inc;C:\Program Files\boost;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\WiX Toolset v3.11\SDK\VS2017\lib\x86;C:\Program Files\boost\lib\32-bit;$(LibraryPath);$(SolutionDir)\$(Configuration)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

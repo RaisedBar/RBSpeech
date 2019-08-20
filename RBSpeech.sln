@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D23424F0-2FE0-4687-8B5F-3B8D3B4A17DA}"
 EndProject
@@ -10,14 +10,33 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{EB2C56D9-449C-42AD-8A9D-8574C47884B0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.NVDA", "src\Plugins\RBSpeech.Plugins.NVDA\RBSpeech.Plugins.NVDA.vcxproj", "{1B0DD624-628D-453B-855C-3B24A5F1BE35}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {0C620B24-2619-46F7-AACF-1499FE3611BC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.SystemAccess", "src\Plugins\RBSpeech.Plugins.SystemAccess\RBSpeech.Plugins.SystemAccess.vcxproj", "{CE566DCA-F804-4455-A7E0-6865D70AB60F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {0C620B24-2619-46F7-AACF-1499FE3611BC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.JAWS", "src\Plugins\RBSpeech.Plugins.JAWS\RBSpeech.Plugins.JAWS.vcxproj", "{E26E1748-BED9-4618-8A39-C5D8F629CEE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {0C620B24-2619-46F7-AACF-1499FE3611BC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech.Plugins.Dolphin", "src\Plugins\RBSpeech.Plugins.Dolphin\RBSpeech.Plugins.Dolphin.vcxproj", "{0FD97CF0-E6DE-44B2-AE9D-C00F5B453F11}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {0C620B24-2619-46F7-AACF-1499FE3611BC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBSpeech", "src\RBSpeech\RBSpeech.vcxproj", "{6751DCC5-16DF-418D-A6EA-F90CEB18D1F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C620B24-2619-46F7-AACF-1499FE3611BC} = {0C620B24-2619-46F7-AACF-1499FE3611BC}
+		{1B0DD624-628D-453B-855C-3B24A5F1BE35} = {1B0DD624-628D-453B-855C-3B24A5F1BE35}
+		{E26E1748-BED9-4618-8A39-C5D8F629CEE3} = {E26E1748-BED9-4618-8A39-C5D8F629CEE3}
+		{CE566DCA-F804-4455-A7E0-6865D70AB60F} = {CE566DCA-F804-4455-A7E0-6865D70AB60F}
+		{0FD97CF0-E6DE-44B2-AE9D-C00F5B453F11} = {0FD97CF0-E6DE-44B2-AE9D-C00F5B453F11}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

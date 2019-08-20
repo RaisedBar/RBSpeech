@@ -5,12 +5,11 @@
 //Windows/ATL includes.
 #include <comutil.h>
 
-//Boost includes.
-#include <boost/format.hpp>
+//WiX includes
+#include <strutil.h>
 
 using namespace RaisedBar::RBSpeech::OSFunctions;
 using namespace std;
-using namespace boost;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsPluginForAnAssistiveTechnology()
 {
@@ -62,15 +61,15 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::BrailleText(BSTR text
 {
 	HRESULT hr = S_OK;
 	CComVariant vFunctionResult;
-	wstring textToBraille;
-wformat formattedBraillingFunction(L"BrailleMessage(%1%, 2000);");
+	LPCWSTR sczBrailleMessageFunctionFormatString = L"BrailleMessage(\"%s\", 2000)";
+	LPWSTR szFormattedBrailleMessageFunction = nullptr;
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be brailled was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "No text has been specified to be brailled.");
-	textToBraille = wstring(text, SysStringLen(text));
-	formattedBraillingFunction % textToBraille;
+	hr = StrAllocFormattedSecure(&szFormattedBrailleMessageFunction, sczBrailleMessageFunctionFormatString, text);
+	ExitOnFailure(hr, S_FALSE, "Unable to formate the ");
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The JAWS API could not be loaded.");
-	hr = JawsAPI.Invoke1(_bstr_t(L"RunFunction"), &_variant_t(str(formattedBraillingFunction).c_str()), &vFunctionResult);
+	hr = JawsAPI.Invoke1(_bstr_t(L"RunFunction"), &_variant_t(szFormattedBrailleMessageFunction), &vFunctionResult);
 	ExitOnFailure(hr, "Executing the JAWS RunFunction function returned a failure.");
 	ExitIfValueNotEqualToSuppliedValue(vFunctionResult.vt, VT_BOOL, hr, S_FALSE, "The JAWS RunFunction function should return a boolean.");
 	ExitOnFalse(vFunctionResult.boolVal, hr, S_FALSE, "The JAWS RunFunction function could not schedule the speech.");

@@ -3,6 +3,12 @@
 #pragma once
 #include "stdafx.h"
 #include <dutil.h>
+#pragma once
+// Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information.
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //macros to extend the wix system, to exit on false and exit if values are equal or not equal to a given value.
 #define ExitOnFalse(v, x, e, s)   if (v ==false) { x = e; Dutil_RootFailure(__FILE__, __LINE__, x); ExitTrace(x, s);  goto LExit; }
 #define ExitOnFalseWithLastError(v, x, s) {if (v ==false) { DWORD Dutil_er = ::GetLastError(); x = HRESULT_FROM_WIN32(Dutil_er); if (FAILED(x)) { Dutil_RootFailure(__FILE__, __LINE__, x); ExitTrace(x, s); goto LExit; } } }
@@ -16,4 +22,7 @@
 #define ExitFunctionWithMessageAndStatusCode(x, e, s)  { x = e; Dutil_RootFailure(__FILE__, __LINE__, x); ExitTrace(x, s);  goto LExit; }
 #define ExitOnNotNull(p, x, e, s)   if (NULL != p) { x = e; Dutil_RootFailure(__FILE__, __LINE__, x); ExitTrace(x, s);  goto LExit; }
 #define ExitOnSuccess(x, s, ...)   if (SUCCEEDED(x)) { ExitTrace(x, s, __VA_ARGS__);  goto LExit; }
-#endif // !WIX_MACROS_H
+#ifdef __cplusplus
+}
+#endif
+	#endif // !WIX_MACROS_H

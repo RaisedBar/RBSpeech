@@ -3,7 +3,7 @@
 #pragma once
 #include "stdafx.h"
 #include "RBSpeechPlugin.h"
- 
+
 //Standard C++ includes.
 #include <memory>
 #include <string>
@@ -68,22 +68,26 @@ namespace RaisedBar {
 				HRESULT UnloadAPI();
 				HRESULT CanDolphinProductSpeak();
 				HRESULT GetActualDolphinProduct(__out DWORD *pdwActualProduct);
+				HRESULT IsHalActive(DWORD currentDolphinProduct);
+				HRESULT IsLunarPlusActive(DWORD currentDolphinProduct);
+				HRESULT IsSuperNovaActive(DWORD currentDolphinProduct);
+				HRESULT IsSpecificDolphinProductActive(unsigned int uCurrentDolphinProduct, unsigned int uExpectedDolphinProduct);
 
 				//private fields.
 			private:
 				boost::dll::shared_library DolphinDllApi;
-				DolAccess_GetSystemFunc DolAccess_GetSystem;
-				DolAccess_ActionFunc DolAccess_Action;
-				DolAccess_CommandFunc DolAccess_Command;
+				DolAccess_GetSystemFunc DolAccess_GetSystem =nullptr;
+				DolAccess_ActionFunc DolAccess_Action =nullptr;
+				DolAccess_CommandFunc DolAccess_Command =nullptr;
 				HRESULT isAPILoaded = S_FALSE;
 			};
-
 			BOOST_DLL_ALIAS(
 				RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::create, // <-- this function is exported with...
 				create_plugin                               // <-- ...this alias name
 			)
 
-		}
+
+			}
 	}
 }
 

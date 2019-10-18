@@ -99,7 +99,7 @@ std::optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::GetAss
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsAPILoaded()
 {
 	HRESULT hr = S_OK;
-	ExitOnFailure(isAPILoaded, hr, S_FALSE, "The JAWS API is not loaded.");
+	ExitOnFalse(isAPILoaded, hr, S_FALSE, "The JAWS API is not loaded.");
 LExit:
 	return hr;
 }
@@ -109,13 +109,16 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadAPI()
 	CComPtr<IDispatch> lpTDispatch =nullptr;
 	CComBSTR bJawsAPIClassID = L"FreedomSci.JawsApi";
 	HRESULT hr = S_OK;
-	//first initialize com for the current thread.
+	//Check to see whether JAWS is active.
+	hr = IsProductActive();
+	ExitOnFailure(hr, "JAWS is not active.");
+	//Now initialize com for the current thread.
 hr =	CoInitializeEx(0, COINIT_APARTMENTTHREADED);
 ExitOnFailure(hr, "Unable to initialize COM for the current thread.");
 hr = lpTDispatch.CoCreateInstance(bJawsAPIClassID);
 ExitOnFailure(hr, "Unable to load the JAWS API.");
 JawsAPI = lpTDispatch;
-isAPILoaded = S_OK;
+isAPILoaded = true;
 LExit:
 	return hr;
 	}
@@ -130,7 +133,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadAPI()
 	JawsAPI = nullptr;
 	ExitOnNotNull(JawsAPI, hr, S_FALSE, "We were not able to release the JAWS API.");
 	CoUninitialize();
-LExit:
+	isAPILoaded = false;
+	LExit:
 	return hr;
 }
 

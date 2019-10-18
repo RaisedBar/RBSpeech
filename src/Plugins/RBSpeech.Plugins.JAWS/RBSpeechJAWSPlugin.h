@@ -43,7 +43,7 @@ namespace RaisedBar {
 				//private fields.
 			private:
 				CComDispatchDriver JawsAPI;
-				HRESULT isAPILoaded = S_FALSE;
+				bool isAPILoaded = false;
 				std::unordered_map<std::wstring, DISPID> methodNamesToDispIDs;
 			};
 

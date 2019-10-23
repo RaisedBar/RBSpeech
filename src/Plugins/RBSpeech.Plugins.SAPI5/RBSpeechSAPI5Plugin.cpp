@@ -46,7 +46,10 @@ optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::GetAssisti
 
 				HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsAPILoaded()
 {
-					return E_NOTIMPL;
+					HRESULT hr = S_OK;
+					ExitOnFalse(isAPILoaded, hr, S_FALSE, "The NVDA API is not loaded.");
+				LExit:
+					return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::LoadAPI()

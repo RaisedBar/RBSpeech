@@ -6,6 +6,10 @@
 //C++ include files.
 #include <memory>
 
+//Windows header files.
+#include <atlbase.h>
+#include <sapi51.h>
+
 namespace RaisedBar {
 	namespace RBSpeech {
 		namespace Plugins {
@@ -31,6 +35,7 @@ namespace RaisedBar {
 				//private fields.
 			private:
 						bool isAPILoaded = false;
+						CComPtr<ISpVoice> sapiVoice =nullptr;
 			};
 		}
 	}

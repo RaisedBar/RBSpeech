@@ -47,17 +47,28 @@ optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::GetAssisti
 				HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsAPILoaded()
 {
 					HRESULT hr = S_OK;
-					ExitOnFalse(isAPILoaded, hr, S_FALSE, "The NVDA API is not loaded.");
+					ExitOnFalse(isAPILoaded, hr, S_FALSE, "The SAPI5 API is not loaded.");
 				LExit:
 					return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::LoadAPI()
 {
-	return E_NOTIMPL;
+	HRESULT hr = S_OK;
+	hr = sapiVoice.CoCreateInstance(CLSID_SpVoice);
+	ExitOnFailure(hr, S_FALSE, "Unable to create the SPVoice object.");
+	isAPILoaded = true;
+	LExit:
+	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::UnloadAPI()
 {
-	return E_NOTIMPL;
-}
+	HRESULT hr = S_OK;
+	sapiVoice.Release();
+	sapiVoice = nullptr;
+	ExitOnNotNull(sapiVoice, hr, S_FALSE, "Unable to release the SAPI5 voice.");
+	isAPILoaded = false;
+	LExit:
+	return hr;
+}	

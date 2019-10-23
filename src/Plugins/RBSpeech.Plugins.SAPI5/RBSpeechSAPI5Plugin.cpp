@@ -13,11 +13,10 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsPluginForAnAssisti
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
-	HKEY hRootKey = HKEY_CLASSES_ROOT;
 	HKEY hOpenedKey = nullptr;
 	hr = RegInitialize();
 	ExitOnFailure(hr , S_FALSE, "Unable to initialize the WiX registry functions.");
-	hr = RegOpen(hRootKey, L"SAPI.SpVoice", KEY_READ, &hOpenedKey);
+	hr = RegOpen(HKEY_CLASSES_ROOT, L"SAPI.SpVoice", KEY_READ, &hOpenedKey);
 	ExitOnFailure(hr, E_FILENOTFOUND, "SAPI5 is not installed.");
 	LExit:
 	ReleaseRegKey(hOpenedKey);

@@ -11,7 +11,6 @@
 #include <memory>
 #include <string>
 #include <optional>
-#include <unordered_map>
 
 #define BOOST_DLL_USE_STD_FS
 //boost includes.
@@ -38,13 +37,14 @@ namespace RaisedBar {
 				HRESULT IsAPILoaded();
 				HRESULT LoadAPI();
 				HRESULT UnloadAPI();
-				HRESULT FindDispIDForMethodOrPropertyName(__in_z LPCWSTR lzMethodOrPropertyName, __out DISPID* dispID);
 				
 				//private fields.
 			private:
 				CComDispatchDriver JawsAPI;
-				bool isAPILoaded = false;
-				std::unordered_map<std::wstring, DISPID> methodNamesToDispIDs;
+				bool isAPILoaded =false;
+				DISPID sayStringDispID =-1;
+				DISPID stopStringDispID =-1;
+				DISPID runFunctionDispID =-1;
 			};
 
 			BOOST_DLL_ALIAS(

@@ -26,12 +26,30 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsProductActive()
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::Silence()
 {
-	return E_NOTIMPL;
+	HRESULT hr = S_OK;
+	hr = sapiVoice->Speak(NULL, SPF_PURGEBEFORESPEAK, NULL);
+	ExitOnFailure(hr, "Unable to silence speech.");
+	LExit:
+	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::SpeakText(BSTR text, VARIANT_BOOL silence)
 {
-	return E_NOTIMPL;
+	HRESULT hr = S_OK;
+	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be spoken was not provided.");
+	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "No text has been specified.");
+	hr = CheckAndLoadAPI();
+	ExitOnFailure(hr, "The SAPI5 API could not be loaded.");
+	if (silence == VARIANT_TRUE)
+	{
+		hr = Silence();
+		ExitOnFailure(hr, "Unable to silence existing speech.");
+	}
+
+	hr = sapiVoice->Speak(text, 0, NULL);
+	ExitOnFailure(hr, "Executing the SAPI5 Speak function returned an error.");
+	LExit:
+	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::BrailleText(BSTR text)

@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "RBSpeechSAPI5Plugin.h"
+//WiX includes.
+#include <regutil.h>
+
 using namespace std;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsPluginForAnAssistiveTechnology()
@@ -9,7 +12,17 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsPluginForAnAssisti
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsProductActive()
 {
-	return E_NOTIMPL;
+	HRESULT hr = S_OK;
+	HKEY hRootKey = HKEY_CLASSES_ROOT;
+	HKEY hOpenedKey = nullptr;
+	hr = RegInitialize();
+	ExitOnFailure(hr , S_FALSE, "Unable to initialize the WiX registry functions.");
+	hr = RegOpen(hRootKey, L"SAPI.SpVoice", KEY_READ, &hOpenedKey);
+	ExitOnFailure(hr, E_FILENOTFOUND, "SAPI5 is not installed.");
+	LExit:
+	ReleaseRegKey(hOpenedKey);
+	RegUninitialize();
+	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::Silence()

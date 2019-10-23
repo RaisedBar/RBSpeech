@@ -4,7 +4,7 @@ using namespace std;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsPluginForAnAssistiveTechnology()
 {
-	return E_NOTIMPL;
+	return S_FALSE;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsProductActive()

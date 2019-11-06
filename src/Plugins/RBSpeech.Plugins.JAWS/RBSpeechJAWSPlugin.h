@@ -15,10 +15,15 @@
 #define BOOST_DLL_USE_STD_FS
 //boost includes.
 #include <boost/dll/alias.hpp>
+#include <boost/dll/shared_library.hpp>
 
 namespace RaisedBar {
 	namespace RBSpeech {
 		namespace Plugins {
+			//Typedefs.
+			typedef int(WINAPI* GetNumberOfJAWSVersionsInstalledFunc)(void);
+			typedef int(WINAPI* GetIndexOfRunningJAWSFunc)(void);
+
 			class CRBSpeechJAWSPlugin : public CRBSpeechPlugin
 			{
 			public:
@@ -48,6 +53,9 @@ namespace RaisedBar {
 				DISPID sayStringDispID =-1;
 				DISPID stopStringDispID =-1;
 				DISPID runFunctionDispID =-1;
+				boost::dll::shared_library jawsSetupUtilityDllApi;
+				GetNumberOfJAWSVersionsInstalledFunc GetNumberOfJAWSVersionsInstalled = nullptr;
+				GetIndexOfRunningJAWSFunc GetIndexOfRunningJAWS = nullptr;
 			};
 
 			BOOST_DLL_ALIAS(

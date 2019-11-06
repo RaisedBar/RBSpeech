@@ -140,7 +140,12 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadAPI()
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsJAWSSetupUtilityLoaded()
 {
-	return E_NOTIMPL;
+	HRESULT hr = S_OK;
+	ExitOnFalse(jawsSetupUtilityDllApi.is_loaded(), hr, S_FALSE, "The JAWS setup utility dll is not loaded.");
+	ExitOnNull(GetNumberOfJAWSVersionsInstalled, hr, S_FALSE, "The GetNumberOfJAWSVersionsInstalled function has not been initialized.");
+	ExitOnNull(GetIndexOfRunningJAWS, hr, S_FALSE, "The GetIndexOfRunningJAWS function has not been initialized.");
+	LExit:
+	return hr;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility()

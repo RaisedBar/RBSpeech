@@ -37,7 +37,10 @@ namespace RaisedBar {
 				HRESULT IsAPILoaded();
 				HRESULT LoadAPI();
 				HRESULT UnloadAPI();
-				
+				HRESULT IsJAWSSetupUtilityLoaded();
+				HRESULT LoadJAWSSetupUtility();
+				HRESULT UnloadJAWSSetupUtility();
+
 				//private fields.
 			private:
 				CComDispatchDriver JawsAPI;

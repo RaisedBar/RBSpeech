@@ -137,3 +137,18 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadAPI()
 	LExit:
 	return hr;
 }
+
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsJAWSSetupUtilityLoaded()
+{
+	return E_NOTIMPL;
+}
+
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility()
+{
+	return E_NOTIMPL;
+}
+
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadJAWSSetupUtility()
+{
+	return E_NOTIMPL;
+}

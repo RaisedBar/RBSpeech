@@ -1,13 +1,11 @@
 #include "stdafx.h"
 #include "RBSpeechJAWSPlugin.h"
-#include "OSFunctions.h"
 
 //WiX includes
 #include <fileutil.h>
 #include <pathutil.h>
 #include <strutil.h>
 
-using namespace RaisedBar::RBSpeech::OSFunctions;
 using namespace std;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsPluginForAnAssistiveTechnology()
@@ -18,8 +16,10 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsPluginForAnAssistiv
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsProductActive()
 {
 	HRESULT hr = S_OK;
-	hr = IsWindowAvailable(L"JFWUI2", L"");
-	ExitOnFailure(hr, "JAWS is not active.");
+	hr = LoadJAWSSetupUtility();
+	ExitOnFailure(hr, S_FALSE, "Unable to load the JAWS setup utility dll.");
+	ExitOnSpecificValue(getNumberOfJAWSVersionsInstalled(), 0, hr, S_FALSE, "JAWS is not installed.");
+	ExitOnSpecificValue(getIndexOfRunningJAWS(), -1, hr, S_FALSE, "JAWS is not active.");
 LExit:
 	return hr;
 }

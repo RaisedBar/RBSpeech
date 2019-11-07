@@ -54,8 +54,8 @@ namespace RaisedBar {
 				DISPID stopStringDispID =-1;
 				DISPID runFunctionDispID =-1;
 				boost::dll::shared_library jawsSetupUtilityDllApi;
-				GetNumberOfJAWSVersionsInstalledFunc GetNumberOfJAWSVersionsInstalled = nullptr;
-				GetIndexOfRunningJAWSFunc GetIndexOfRunningJAWS = nullptr;
+				GetNumberOfJAWSVersionsInstalledFunc getNumberOfJAWSVersionsInstalled = nullptr;
+				GetIndexOfRunningJAWSFunc getIndexOfRunningJAWS = nullptr;
 			};
 
 			BOOST_DLL_ALIAS(

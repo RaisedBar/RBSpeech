@@ -44,7 +44,7 @@ namespace RaisedBar {
 				HRESULT UnloadAPI();
 				HRESULT IsJAWSSetupUtilityLoaded();
 				HRESULT LoadJAWSSetupUtility();
-				HRESULT UnloadJAWSSetupUtility();
+				void UnloadJAWSSetupUtility();
 inline bool IsDispIDValid(DISPID id)
 {
 	return id > DISPID_UNKNOWN;

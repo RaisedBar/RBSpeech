@@ -21,6 +21,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsProductActive()
 	ExitOnSpecificValue(getNumberOfJAWSVersionsInstalled(), 0, hr, S_FALSE, "JAWS is not installed.");
 	ExitOnSpecificValue(getIndexOfRunningJAWS(), -1, hr, S_FALSE, "JAWS is not active.");
 	LExit:
+	UnloadJAWSSetupUtility();
 	return hr;
 }
 
@@ -184,20 +185,12 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility(
 	return hr;
 }
 
-HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadJAWSSetupUtility()
+void RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadJAWSSetupUtility()
 {
-	HRESULT hr = S_OK;
-	hr = IsJAWSSetupUtilityLoaded();
-	ExitOnFailure(hr, S_FALSE, "The JAWS setup utility dll is not loaded.");
-	ExitOnNull(getNumberOfJAWSVersionsInstalled, hr, S_FALSE, "The GetNumberOfJAWSVersionsInstalled function has not been initialized.");
-	getNumberOfJAWSVersionsInstalled = nullptr;
-	ExitOnNotNull(getNumberOfJAWSVersionsInstalled, hr, S_FALSE, "The GetNumberOfJAWSVersionsInstalled function has not been cleared.");
-	ExitOnNull(getIndexOfRunningJAWS, hr, S_FALSE, "The GetIndexOfRunningJAWS function has not been initialized.");
-	getIndexOfRunningJAWS = nullptr;
-	ExitOnNotNull(getIndexOfRunningJAWS, hr, S_FALSE, "The getIndexOfRunningJAWS function has not been cleared.");
-	ExitOnFalse(jawsSetupUtilityDllApi.is_loaded(), hr, S_FALSE, "The JAWS setup utility dll is not loaded.");
-	jawsSetupUtilityDllApi.unload();
-	ExitOnTrue(jawsSetupUtilityDllApi.is_loaded(), hr, S_FALSE, "The JAWS setup utility dll is still loaded.");
-	LExit:
-	return hr;
-}
+	if (IsJAWSSetupUtilityLoaded() ==S_OK)
+	{
+		getNumberOfJAWSVersionsInstalled = nullptr;
+		getIndexOfRunningJAWS = nullptr;
+		jawsSetupUtilityDllApi.unload();
+	}
+	}

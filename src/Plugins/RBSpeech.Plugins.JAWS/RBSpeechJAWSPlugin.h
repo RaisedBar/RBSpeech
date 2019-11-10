@@ -45,14 +45,17 @@ namespace RaisedBar {
 				HRESULT IsJAWSSetupUtilityLoaded();
 				HRESULT LoadJAWSSetupUtility();
 				HRESULT UnloadJAWSSetupUtility();
+inline bool IsDispIDValid(DISPID id)
+{
+	return id > DISPID_UNKNOWN;
+}
 
 				//private fields.
 			private:
 				CComDispatchDriver JawsAPI;
-				bool isAPILoaded =false;
-				DISPID sayStringDispID =-1;
-				DISPID stopStringDispID =-1;
-				DISPID runFunctionDispID =-1;
+				DISPID sayStringDispID = DISPID_UNKNOWN;
+				DISPID stopStringDispID = DISPID_UNKNOWN;
+				DISPID runFunctionDispID = DISPID_UNKNOWN;
 				boost::dll::shared_library jawsSetupUtilityDllApi;
 				GetNumberOfJAWSVersionsInstalledFunc getNumberOfJAWSVersionsInstalled = nullptr;
 				GetIndexOfRunningJAWSFunc getIndexOfRunningJAWS = nullptr;

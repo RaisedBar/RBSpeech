@@ -20,7 +20,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsProductActive()
 	ExitOnFailure(hr, S_FALSE, "Unable to load the JAWS setup utility dll.");
 	ExitOnSpecificValue(getNumberOfJAWSVersionsInstalled(), 0, hr, S_FALSE, "JAWS is not installed.");
 	ExitOnSpecificValue(getIndexOfRunningJAWS(), -1, hr, S_FALSE, "JAWS is not active.");
-LExit:
+	LExit:
 	return hr;
 }
 
@@ -92,7 +92,10 @@ std::optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::GetAss
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsAPILoaded()
 {
 	HRESULT hr = S_OK;
-	ExitOnFalse(isAPILoaded, hr, S_FALSE, "The JAWS API is not loaded.");
+	ExitOnTrue(!JawsAPI, hr, S_FALSE, "The JAWS API is not loaded.");
+	ExitOnFalse(IsDispIDValid(sayStringDispID), hr, S_FALSE, "The JAWS API is not loaded.");
+	ExitOnFalse(IsDispIDValid(stopStringDispID), hr, S_FALSE, "The JAWS API is not loaded.");
+	ExitOnFalse(IsDispIDValid(runFunctionDispID), hr, S_FALSE, "The JAWS API is not loaded.");
 LExit:
 	return hr;
 }
@@ -115,9 +118,8 @@ hr = JawsAPI.GetIDOfName(L"SayString", &sayStringDispID);
 ExitOnFailure(hr, "Unable to find the SayString disp ID.");
 hr = JawsAPI.GetIDOfName(L"StopString", &stopStringDispID);
 ExitOnFailure(hr, "Unable to find the StopString disp ID.");
-hr = JawsAPI.GetIDOfName(L"RunFunction", &stopStringDispID);
+hr = JawsAPI.GetIDOfName(L"RunFunction", &runFunctionDispID);
 ExitOnFailure(hr, "Unable to find the RunFunction disp ID.");
-	isAPILoaded = true;
 LExit:
 	return hr;
 	}
@@ -127,15 +129,14 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadAPI()
 	HRESULT hr = S_OK;
 	hr = IsAPILoaded();
 	ExitOnFailure(hr, "The JAWS API is not loaded.");
-	ExitOnNull(JawsAPI, hr, S_FALSE, "The JAWS API is null.");
+	ExitOnTrue(!JawsAPI, hr, S_FALSE, "The JAWS API has not been assigned.");
 	JawsAPI.Release();
 	JawsAPI = nullptr;
-	ExitOnNotNull(JawsAPI, hr, S_FALSE, "We were not able to release the JAWS API.");
-	sayStringDispID = -1;
-	stopStringDispID = -1;
-	runFunctionDispID = -1;
+	ExitOnFalse(!JawsAPI, hr, S_FALSE, "We were not able to release the JAWS API.");
+	sayStringDispID = DISPID_UNKNOWN;
+	stopStringDispID = DISPID_UNKNOWN;
+	runFunctionDispID = DISPID_UNKNOWN;
 	CoUninitialize();
-	isAPILoaded = false;
 	LExit:
 	return hr;
 }

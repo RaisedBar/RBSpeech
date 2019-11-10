@@ -70,7 +70,7 @@ optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::GetAssisti
 				HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsAPILoaded()
 {
 					HRESULT hr = S_OK;
-					ExitOnFalse(isAPILoaded, hr, S_FALSE, "The SAPI5 API is not loaded.");
+					ExitOnTrue(!sapiVoice, hr, S_FALSE, "The SAPI5 API is not loaded.");
 				LExit:
 					return hr;
 }
@@ -80,7 +80,6 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::LoadAPI()
 	HRESULT hr = S_OK;
 	hr = sapiVoice.CoCreateInstance(CLSID_SpVoice);
 	ExitOnFailure(hr, S_FALSE, "Unable to create the SPVoice object.");
-	isAPILoaded = true;
 	LExit:
 	return hr;
 }
@@ -88,10 +87,12 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::LoadAPI()
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::UnloadAPI()
 {
 	HRESULT hr = S_OK;
+	hr = IsAPILoaded();
+	ExitOnFailure(hr, "The SAPI 5 API is not loaded.");
+	ExitOnTrue(!sapiVoice, hr, S_FALSE, "The SAPI 5 API has not been assigned.");
 	sapiVoice.Release();
 	sapiVoice = nullptr;
-	ExitOnNotNull(sapiVoice, hr, S_FALSE, "Unable to release the SAPI5 voice.");
-	isAPILoaded = false;
+	ExitOnFalse(!sapiVoice, hr, S_FALSE, "We were not able to release the SAPI5 voice.");
 	LExit:
 	return hr;
 }	

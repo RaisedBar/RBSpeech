@@ -34,7 +34,6 @@ namespace RaisedBar {
 
 				//private fields.
 			private:
-						bool isAPILoaded = false;
 						CComPtr<ISpVoice> sapiVoice =nullptr;
 			};
 		}

@@ -8,7 +8,7 @@
 
 //Windows header files.
 #include <atlbase.h>
-#include <sapi51.h>
+#include <sapi.h>
 
 namespace RaisedBar {
 	namespace RBSpeech {
@@ -34,7 +34,7 @@ namespace RaisedBar {
 
 				//private fields.
 			private:
-						CComPtr<ISpVoice> sapiVoice =nullptr;
+						CComPtr<ISpeechVoice> sapiVoice =nullptr;
 			};
 		}
 	}

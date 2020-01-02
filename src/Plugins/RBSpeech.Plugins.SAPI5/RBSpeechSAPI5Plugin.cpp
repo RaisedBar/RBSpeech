@@ -27,10 +27,10 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::IsProductActive()
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::Silence()
 {
 	HRESULT hr = S_OK;
-	const DWORD flags = SPF_ASYNC | SPF_IS_NOT_XML | SPF_PURGEBEFORESPEAK;
+	SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags::SVSFPurgeBeforeSpeak;
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The SAPI 5 API could not be loaded.");
-	hr = sapiVoice->Speak(NULL, flags, NULL);
+	hr = sapiVoice->Speak(NULL, flags, 0);
 	ExitOnFailure(hr, "Unable to silence speech.");
 	LExit:
 	return hr;
@@ -39,18 +39,19 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::Silence()
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::SpeakText(BSTR text, VARIANT_BOOL silence)
 {
 	HRESULT hr = S_OK;
-	DWORD flags = SPF_ASYNC | SPF_IS_NOT_XML;
+	SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags::SVSFDefault;
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be spoken was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "No text has been specified.");
 
 	if (silence == VARIANT_TRUE)
 	{
-		flags |= SPF_PURGEBEFORESPEAK;
-	}
+		hr = Silence();
+		ExitOnFailure(hr, "Unable to silence speech.");
+		}
 
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The SAPI 5 API could not be loaded.");
-
+	
 	hr = sapiVoice->Speak(text, flags, NULL);
 	ExitOnFailure(hr, "Executing the SAPI5 Speak function returned an error.");
 	LExit:
@@ -89,7 +90,6 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSAPI5Plugin::UnloadAPI()
 	HRESULT hr = S_OK;
 	hr = IsAPILoaded();
 	ExitOnFailure(hr, "The SAPI 5 API is not loaded.");
-	ExitOnTrue(!sapiVoice, hr, S_FALSE, "The SAPI 5 API has not been assigned.");
 	sapiVoice.Release();
 	sapiVoice = nullptr;
 	ExitOnFalse(!sapiVoice, hr, S_FALSE, "We were not able to release the SAPI5 voice.");

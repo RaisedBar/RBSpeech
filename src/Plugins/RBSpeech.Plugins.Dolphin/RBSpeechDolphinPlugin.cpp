@@ -169,6 +169,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::GetActualDolphinPr
 LExit:
 	return hr;
 }
+
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsHalActive(DWORD currentDolphinProduct)
 {
 	HRESULT hr = S_OK;

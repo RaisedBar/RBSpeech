@@ -3,6 +3,7 @@
 
 //WiX includes.
 #include <pathutil.h>
+#include <strutil.h>
 
 //C++ standard includes.
 #include <filesystem>
@@ -110,6 +111,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::LoadAPI()
 	DolAccess_Command = DolphinDllApi.get<DolAccess_CommandFunc>("DolAccess_Command");
 	isAPILoaded = S_OK;
 LExit:
+	ReleaseStr(sczCurrentPath);
 	return hr;
 }
 

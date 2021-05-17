@@ -47,7 +47,8 @@ namespace RaisedBar {
 #define DOLAPI_COMMAND_LOAD_SCRIPT 2
 #define DOLAPI_COMMAND_UNLOAD_SCRIPT 3
 #define DOLAPI_COMMAND_SCRIPT_FUNCTION 4
-
+//Defines for Dolphin actions.
+#define DOLACTION_SILENCE 141
 			class CRBSpeechDolphinPlugin : public CRBSpeechPlugin
 			{
 			public:

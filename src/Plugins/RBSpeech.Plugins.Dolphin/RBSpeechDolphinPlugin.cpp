@@ -33,7 +33,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::Silence()
 	DWORD dwDolphinFunctionReturnCode = 0;
 	hr = CanDolphinProductSpeak();
 	ExitOnFailure(hr, "The currently active dolphin product is unable to stop speaking.");
-	dwDolphinFunctionReturnCode = DolAccess_Action(141);
+	dwDolphinFunctionReturnCode = DolAccess_Action(DOLACTION_SILENCE);
 	ExitIfValueGreaterThanSuppliedValue(dwDolphinFunctionReturnCode, DOLACCESS_SUCCESS, hr, S_FALSE, "Unable to silence the current dolphin product.");
 LExit:
 	return hr;

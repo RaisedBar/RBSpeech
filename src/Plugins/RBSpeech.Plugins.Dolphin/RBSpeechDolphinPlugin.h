@@ -69,10 +69,10 @@ namespace RaisedBar {
 				HRESULT UnloadAPI();
 				HRESULT CanDolphinProductSpeak();
 				HRESULT GetActualDolphinProduct(__out DWORD *pdwActualProduct);
-				HRESULT IsHalActive(DWORD currentDolphinProduct);
-				HRESULT IsLunarPlusActive(DWORD currentDolphinProduct);
-				HRESULT IsSuperNovaActive(DWORD currentDolphinProduct);
-				HRESULT IsSpecificDolphinProductActive(unsigned int uCurrentDolphinProduct, unsigned int uExpectedDolphinProduct);
+				HRESULT IsHalActive();
+				HRESULT IsLunarPlusActive();
+				HRESULT IsSuperNovaActive();
+				HRESULT IsSpecificDolphinProductActive(DWORD DWCurrentDolphinProduct, DWORD dwExpectedDolphinProduct);
 
 				//private fields.
 			private:

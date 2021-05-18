@@ -49,7 +49,7 @@ namespace RaisedBar {
 				SASpeakFunc SASpeak;
 				SABrailleFunc SABraille;
 				SAStopAudioFunc SAStopAudio;
-				bool isAPILoaded = false;
+				HRESULT isAPILoaded = S_FALSE;
 			};
 
 			BOOST_DLL_ALIAS(

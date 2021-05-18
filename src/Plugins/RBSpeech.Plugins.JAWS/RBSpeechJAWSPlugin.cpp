@@ -2,11 +2,14 @@
 #include "RBSpeechJAWSPlugin.h"
 
 //WiX includes
-#include <fileutil.h>
 #include <pathutil.h>
 #include <strutil.h>
 
+//Standard C++ includes.
+#include <filesystem>
+
 using namespace std;
+using namespace std::filesystem;
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::IsPluginForAnAssistiveTechnology()
 {
@@ -156,22 +159,28 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility(
 {
 	HRESULT hr = S_OK;
 	LPWSTR pszCurrentProcessPath = nullptr;
-	LPWSTR pszCurrentProcessDirectoryPath = nullptr;
-	LPWSTR pszJAWSSetupUtilityDllFilePath = nullptr;
+	path jawsSetupUtilityDLLPath;
 	hr = IsJAWSSetupUtilityLoaded();
 	ExitOnSuccess(hr, "The JAWS setup utility dll is already loaded.");
 	hr = PathForCurrentProcess(&pszCurrentProcessPath, nullptr);
 	ExitOnFailure(hr, S_FALSE, "Unable to retrieve the path for the current process.");
-	hr = PathGetDirectory(pszCurrentProcessPath, &pszCurrentProcessDirectoryPath);
-	ExitOnFailure(hr, "Unable to extract the directory from the path for the current process.");
-	hr = PathConcat(pszCurrentProcessDirectoryPath, L"Plugins", &pszJAWSSetupUtilityDllFilePath);
-	ExitOnFailure(hr, "Unable to concatinate the main plugins directory path.");
-	hr = PathConcat(pszJAWSSetupUtilityDllFilePath, L"JAWS", &pszJAWSSetupUtilityDllFilePath);
-	ExitOnFailure(hr, "Unable to concatinate the JAWS plugin directory path.");
-	hr = PathConcat(pszJAWSSetupUtilityDllFilePath, L"JAWSSetupUtility.dll", &pszJAWSSetupUtilityDllFilePath);
-	ExitOnFailure(hr, "Unable to concatinate the JAWS setup utility dll filename to the JAWS plugin path.");
-	ExitOnFalse(FileExistsEx(pszJAWSSetupUtilityDllFilePath, nullptr), hr, E_FILENOTFOUND, "The JAWS setup utility dll could not be found.");
-	jawsSetupUtilityDllApi.load(pszJAWSSetupUtilityDllFilePath);
+
+	jawsSetupUtilityDLLPath /= pszCurrentProcessPath;
+	if (jawsSetupUtilityDLLPath.has_filename())
+	{
+		jawsSetupUtilityDLLPath.remove_filename();
+	}
+	
+	//Append the plugins folder hierarchy to the path.
+	jawsSetupUtilityDLLPath = jawsSetupUtilityDLLPath / L"Plugins";
+	jawsSetupUtilityDLLPath = jawsSetupUtilityDLLPath / L"JAWS";
+	jawsSetupUtilityDLLPath = jawsSetupUtilityDLLPath / L"JAWSSetupUtility.dll";
+
+	//Check file existence.
+	ExitOnFalse(exists(jawsSetupUtilityDLLPath), hr, E_FILENOTFOUND, "The JAWS set up utility dll file has not been found.");
+
+	//The dll file exists, so try to load it.
+	jawsSetupUtilityDllApi.load(jawsSetupUtilityDLLPath.generic_wstring());
 	ExitOnFalse(jawsSetupUtilityDllApi.is_loaded(), hr, S_FALSE, "The JAWS setup utility dll could not be loaded.");
 	//Load the functions we need.
 	ExitOnFalse(jawsSetupUtilityDllApi.has("GetNumberOfJAWSVersionsInstalled"), hr, S_FALSE, "The JAWS setup utility dll does not export the GetNumberOfJAWSVersionsInstalled function.");
@@ -179,8 +188,6 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility(
 	ExitOnFalse(jawsSetupUtilityDllApi.has("GetIndexOfRunningJAWS"), hr, S_FALSE, "The JAWS setup utility dll does not export the GetIndexOfRunningJAWS function.");
 	getIndexOfRunningJAWS = jawsSetupUtilityDllApi.get<GetIndexOfRunningJAWSFunc>("GetIndexOfRunningJAWS");
 	LExit:
-	ReleaseNullStr(pszJAWSSetupUtilityDllFilePath);
-	ReleaseNullStr(pszCurrentProcessDirectoryPath);
 	ReleaseNullStr(pszCurrentProcessPath);
 	return hr;
 }

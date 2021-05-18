@@ -4,9 +4,6 @@
 #include "stdafx.h"
 #include "RBSpeechPlugin.h"
 
-//Windows includes:
-#include <Ole2.h>
-
 //Standard C++ includes.
 #include <memory>
 #include <optional>

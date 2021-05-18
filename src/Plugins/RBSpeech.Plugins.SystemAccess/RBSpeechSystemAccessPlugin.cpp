@@ -9,9 +9,6 @@
 using namespace std;
 using namespace std::filesystem;
 
-//Boost includes.
-#include <boost/dll/import.hpp>
-
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsPluginForAnAssistiveTechnology()
 {
 	return S_OK;

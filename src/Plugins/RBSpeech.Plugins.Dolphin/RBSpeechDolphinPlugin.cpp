@@ -53,7 +53,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::SpeakText(BSTR tex
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The Dolphin API could not be loaded.");
 	hr = CanDolphinProductSpeak();
-	ExitOnFailure(hr, "The currently active Dolphin product was unable to produce speech.");
+	ExitOnFailure(hr, "The currently active Dolphin product is unable to produce speech.");
 
 	if (silence == VARIANT_TRUE)
 	{
@@ -100,7 +100,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::LoadAPI()
 	DolphinDllFileName /= L"dolapi.dll";
 
 	//Check file existence.
-	ExitOnFalse(exists(DolphinDllFileName), hr, E_FILENOTFOUND, "The Dolphin dll file is not found.");
+	ExitOnFalse(exists(DolphinDllFileName), hr, E_FILENOTFOUND, "The Dolphin dll file has not been found.");
 
 	//The dll file exists, so try to load it.
 	DolphinDllApi.load(DolphinDllFileName.generic_wstring());

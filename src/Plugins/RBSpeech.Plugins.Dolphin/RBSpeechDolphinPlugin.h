@@ -6,8 +6,8 @@
 
 //Standard C++ includes.
 #include <memory>
-#include <string>
 #include <optional>
+#include <string>
 #include <vector>
 
 #define BOOST_DLL_USE_STD_FS

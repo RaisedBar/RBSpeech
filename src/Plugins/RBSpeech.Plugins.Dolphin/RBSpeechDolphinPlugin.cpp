@@ -4,8 +4,8 @@
 //WiX includes.
 #include <memutil.h>
 #include <pathutil.h>
-#include <strutil.h>
 #include <procutil.h>
+#include <strutil.h>
 
 //C++ standard includes.
 #include <filesystem>

@@ -41,6 +41,7 @@ namespace RaisedBar {
 				inline HRESULT IsAPILoaded();
 				HRESULT LoadAPI();
 				HRESULT UnloadAPI();
+
 				//private fields.
 			private:
 				boost::dll::shared_library SystemAccessDllApi;

@@ -95,14 +95,19 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	{
 		SystemAccessDllFileName.remove_filename();
 	}
+	//Add the plugins folder hierarchy.
+	SystemAccessDllFileName /= L"plugins/SystemAccess";
 
 	//Add the System Access dll file name for 32-bit.
 	SystemAccessDllFileName /= L"SAAPI32.dll";
+
 	//Check file existence.
 	ExitOnFalse(exists(SystemAccessDllFileName), hr, E_FILENOTFOUND, "The System Access dll file is not found.");
+
 	//The dll file exists, so try to load it.
 	SystemAccessDllApi.load(SystemAccessDllFileName.generic_wstring());
 	ExitOnFalse(SystemAccessDllApi.is_loaded(), hr, S_FALSE, "The System Access dll file could not be loaded.");
+
 	//Load the functions we need.
 	ExitOnFalse(SystemAccessDllApi.has("SA_IsRunning"), hr, S_FALSE, "The System Access dll does not export the SA_IsRunning function.");
 	SAIsRunning = SystemAccessDllApi.get<SAIsRunningFunc>("SA_IsRunning");

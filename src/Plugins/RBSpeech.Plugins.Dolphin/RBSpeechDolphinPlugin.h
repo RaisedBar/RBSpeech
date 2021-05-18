@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include <optional>
+#include <vector>
 
 #define BOOST_DLL_USE_STD_FS
 //boost includes.
@@ -81,6 +82,7 @@ namespace RaisedBar {
 				DolAccess_ActionFunc DolAccess_Action =nullptr;
 				DolAccess_CommandFunc DolAccess_Command =nullptr;
 				HRESULT isAPILoaded = S_FALSE;
+				std::vector< LPCWSTR> dolphinProcessNames = {L"snova.exe"};
 			};
 			BOOST_DLL_ALIAS(
 				RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::create, // <-- this function is exported with...

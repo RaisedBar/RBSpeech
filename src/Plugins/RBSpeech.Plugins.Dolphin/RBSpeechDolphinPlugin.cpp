@@ -2,8 +2,10 @@
 #include "RBSpeechDolphinPlugin.h"
 
 //WiX includes.
+#include <memutil.h>
 #include <pathutil.h>
 #include <strutil.h>
+#include <procutil.h>
 
 //C++ standard includes.
 #include <filesystem>
@@ -151,7 +153,31 @@ LExit:
 
 optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::GetAssistiveTechnologyExecutable()
 {
-	return nullopt;
+	optional<wstring> oResult = nullopt;
+	HRESULT hr = S_OK;
+	DWORD* prgProcessIds = NULL;
+	DWORD cProcessIds = 0;
+	hr = IsProductActive();
+	ExitOnFailure(hr, "A dolphin product is not active.");
+	for(auto wzPotentialDolphinProcessName : dolphinProcessNames)
+	{
+		ReleaseNullMem(prgProcessIds);
+		cProcessIds = 0;
+		hr = ProcFindAllIdsFromExeName(wzPotentialDolphinProcessName, &prgProcessIds, &cProcessIds);
+		ExitOnFailure(hr, "Failed to enumerate all the processes by name %ls.", wzPotentialDolphinProcessName);
+		if (SUCCEEDED(hr) && (cProcessIds >0))
+		{
+		//We have found a dolphon process, so exit.
+			oResult = wzPotentialDolphinProcessName;
+			break;
+			goto LExit;
+		}
+	}
+	
+	LExit:
+	ReleaseNullMem(prgProcessIds);
+	cProcessIds = 0;
+	return oResult;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::CanDolphinProductSpeak()

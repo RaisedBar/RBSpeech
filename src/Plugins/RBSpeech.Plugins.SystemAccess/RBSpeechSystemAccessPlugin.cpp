@@ -69,7 +69,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::BrailleText(B
 	hr = CheckAndLoadAPI();
 	ExitOnFailure(hr, "The NVDA API could not e loaded.");
 
-	ExitOnFalse(SABraille, hr, S_FALSE, "brailling through System Access failed.");
+	ExitOnFalse(SABraille(text), hr, S_FALSE, "brailling through System Access failed.");
 LExit:
 	return hr;
 }

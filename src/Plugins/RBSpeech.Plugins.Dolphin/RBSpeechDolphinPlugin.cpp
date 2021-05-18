@@ -86,6 +86,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::LoadAPI()
 	HRESULT hr = S_OK;
 	LPWSTR sczCurrentPath = NULL;
 	path DolphinDllFileName;
+
 	hr = IsAPILoaded();
 	ExitOnSuccess(hr, "The Dolphin API is already loaded.");
 

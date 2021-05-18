@@ -65,7 +65,7 @@ namespace RaisedBar {
 				}
 
 			private:
-				HRESULT IsAPILoaded();
+				inline HRESULT IsAPILoaded();
 				HRESULT LoadAPI();
 				HRESULT UnloadAPI();
 				HRESULT CanDolphinProductSpeak();

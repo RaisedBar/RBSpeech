@@ -76,11 +76,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::BrailleText(BSTR t
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::IsAPILoaded()
 {
-	HRESULT hr = S_OK;
-	hr = isAPILoaded;
-	ExitOnFailure(hr, "The Dolphin API is not loaded.");
-LExit:
-	return hr;
+	return isAPILoaded;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::LoadAPI()

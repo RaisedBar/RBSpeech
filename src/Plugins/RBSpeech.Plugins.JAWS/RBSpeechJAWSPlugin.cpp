@@ -141,6 +141,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadAPI()
 	stopStringDispID = DISPID_UNKNOWN;
 	runFunctionDispID = DISPID_UNKNOWN;
 	CoUninitialize();
+
 	LExit:
 	return hr;
 }
@@ -192,12 +193,17 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::LoadJAWSSetupUtility(
 	return hr;
 }
 
-void RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadJAWSSetupUtility()
+HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechJAWSPlugin::UnloadJAWSSetupUtility()
 {
-	if (IsJAWSSetupUtilityLoaded() ==S_OK)
-	{
-		getNumberOfJAWSVersionsInstalled = nullptr;
-		getIndexOfRunningJAWS = nullptr;
-		jawsSetupUtilityDllApi.unload();
-	}
-	}
+	HRESULT hr = S_OK;
+	hr = IsJAWSSetupUtilityLoaded();
+	ExitOnFailure(hr, "The JAWS set up utility DLL is not loaded.");
+	getNumberOfJAWSVersionsInstalled = nullptr;
+	ExitOnNotNull(getNumberOfJAWSVersionsInstalled, hr, S_FALSE, "Unable to release the GetNumberOfJAWSVersions function.");
+	getIndexOfRunningJAWS = nullptr;
+	ExitOnNotNull(getIndexOfRunningJAWS, hr, S_FALSE, "Unable to release the GetNumberOfJAWSVersions function.");
+	jawsSetupUtilityDllApi.unload();
+	ExitOnFalse(jawsSetupUtilityDllApi.is_loaded(), hr, S_FALSE, "Unable to unload the JAWS set up utility DLL.");
+	LExit:
+	return hr;
+}

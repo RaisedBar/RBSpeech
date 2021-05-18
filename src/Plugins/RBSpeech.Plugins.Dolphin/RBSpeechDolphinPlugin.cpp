@@ -186,11 +186,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::CanDolphinProductS
 	hr = GetActualDolphinProduct(&dwCurrentDolphinProduct);
 	ExitOnFailure(hr, "The current Dolphin product could not be obtained.");
 
-	hr = S_FALSE;
-	if ((IsHalActive() ==S_OK) && (IsLunarPlusActive() ==S_OK) && ((dwCurrentDolphinProduct) ==S_OK))
-	{
-		hr = S_OK;
-	}
+	hr = IsHalActive() == S_OK || IsLunarPlusActive() == S_OK || IsSuperNovaActive() == S_OK;
 		ExitOnFailure(hr, "The currently active Dolphin product is not able to speak.");
 		LExit:
 	return hr;

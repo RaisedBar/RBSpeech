@@ -74,7 +74,14 @@ LExit:
 
 optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::GetAssistiveTechnologyExecutable()
 {
-	return L"sa.exe";
+	optional<wstring> oReturnValue = nullopt;
+	HRESULT hr = S_OK;
+	hr = IsProductActive();
+	ExitOnFailure(hr, "System Access is not active.");
+	ExitOnFailure(hr, "The System Access API could not be loaded.");
+	oReturnValue =L"sa.exe";
+LExit:
+	return oReturnValue;
 }
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsAPILoaded()

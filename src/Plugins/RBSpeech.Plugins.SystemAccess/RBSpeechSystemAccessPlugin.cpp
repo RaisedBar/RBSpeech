@@ -108,9 +108,9 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	}
 
 	//Add the plugins folder hierarchy.
-	SystemAccessDllFileName / L"plugins/ L"SystemAccess";
+	SystemAccessDllFileName  = SystemAccessDllFileName / L"plugins" / L"SystemAccess";
 	//Add the System Access dll file name for 32-bit.
-	SystemAccessDllFileName / L"SAAPI32.dll";
+	SystemAccessDllFileName  =SystemAccessDllFileName / L"SAAPI32.dll";
 
 	//Check file existence.
 	ExitOnFalse(exists(SystemAccessDllFileName), hr, E_FILENOTFOUND, "The System Access dll file could not be found.");

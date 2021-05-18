@@ -98,8 +98,10 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechDolphinPlugin::LoadAPI()
 		DolphinDllFileName.remove_filename();
 	}
 
-	//Add the Dolphin API file name.
-	DolphinDllFileName /= L"dolapi.dll";
+	//Add the plugins directory hierarchy and Dolphin API file name.
+	DolphinDllFileName = DolphinDllFileName / L"Plugins";
+	DolphinDllFileName = DolphinDllFileName / L"Dolphin";
+	DolphinDllFileName = DolphinDllFileName / L"dolapi.dll";
 
 	//Check file existence.
 	ExitOnFalse(exists(DolphinDllFileName), hr, E_FILENOTFOUND, "The Dolphin dll file has not been found.");

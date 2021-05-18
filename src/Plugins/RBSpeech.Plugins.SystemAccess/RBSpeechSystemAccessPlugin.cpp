@@ -6,6 +6,7 @@
 
 //Standard C++ includes.
 #include <filesystem>
+
 using namespace std;
 using namespace std::filesystem;
 
@@ -86,10 +87,13 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	HRESULT hr = S_OK;
 	LPWSTR sczCurrentPath = NULL;
 	path SystemAccessDllFileName;
+
 	hr = IsAPILoaded();
 	ExitOnSuccess(hr, "The System Access API is already loaded.");
+
 	hr = PathForCurrentProcess(&sczCurrentPath, NULL);
 	ExitOnFailure(hr, "Failed to get current process path.");
+
 	SystemAccessDllFileName = sczCurrentPath;
 	if (SystemAccessDllFileName.has_filename())
 	{
@@ -111,13 +115,17 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	//Load the functions we need.
 	ExitOnFalse(SystemAccessDllApi.has("SA_IsRunning"), hr, S_FALSE, "The System Access dll does not export the SA_IsRunning function.");
 	SAIsRunning = SystemAccessDllApi.get<SAIsRunningFunc>("SA_IsRunning");
+
 	ExitOnFalse(SystemAccessDllApi.has("SA_SayW"), hr, S_FALSE, "The System Access dll does not export the SA_SayW function.");
 	SASpeak = SystemAccessDllApi.get<SASpeakFunc>("SA_SayW");
+
 	ExitOnFalse(SystemAccessDllApi.has("SA_BrlShowTextW"), hr, S_FALSE, "The System Access dll does not export the SA_BrlShowTextW function.");
 	SABraille = SystemAccessDllApi.get<SABrailleFunc>("SA_BrlShowTextW");
+
 	ExitOnFalse(SystemAccessDllApi.has("SA_StopAudio"), hr, S_FALSE, "The System Access dll does not export the SA_StopAudio function.");
 	SAStopAudio = SystemAccessDllApi.get<SAStopAudioFunc>("SA_StopAudio");
-	isAPILoaded = true;
+
+	isAPILoaded = S_OK;
 LExit:
 	return hr;
 }
@@ -127,22 +135,28 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::UnloadAPI()
 	HRESULT hr = S_OK;
 	hr = IsAPILoaded();
 	ExitOnFailure(hr, "The System Access API is not loaded.");
+
 	ExitOnNull(SAStopAudio, hr, S_FALSE, "The SAStopAudio function is already null.");
 	SAStopAudio = nullptr;
 	ExitOnNotNull(SAStopAudio, hr, S_FALSE, "The SAStopAudio function could not be released.");
+	
 	ExitOnNull(SABraille, hr, S_FALSE, "The SABraille function is already null.");
 	SABraille = nullptr;
 	ExitOnNotNull(SABraille, hr, S_FALSE, "The SABraille function could not be released.");
+	
 	ExitOnNull(SASpeak, hr, S_FALSE, "The SASpeak function is already null.");
 	SASpeak = nullptr;
 	ExitOnNotNull(SASpeak, hr, S_FALSE, "The SASpeak function could not be released.");
+	
 	ExitOnNull(SAIsRunning, hr, S_FALSE, "The SAIsRunning function is already null.");
 	SAIsRunning = nullptr;
 	ExitOnNotNull(SAIsRunning, hr, S_FALSE, "The SAIsRunning function could not be released.");
+	
 	ExitOnFalse(SystemAccessDllApi.is_loaded(), hr, S_FALSE, "The System Access dll file is not loaded.");
 	SystemAccessDllApi.unload();
 	ExitOnTrue(SystemAccessDllApi.is_loaded(), hr, S_FALSE, "The System Access dll is still loaded.");
-	isAPILoaded = false;
+
+	isAPILoaded = S_FALSE;
 LExit:
 	return hr;
 }

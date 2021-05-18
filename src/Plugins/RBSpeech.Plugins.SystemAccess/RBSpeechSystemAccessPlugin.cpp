@@ -29,8 +29,8 @@ LExit:
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::Silence()
 {
 	HRESULT hr = S_OK;
-	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The System Access API could not be loaded.");
+	hr = IsProductActive();
+	ExitOnFailure(hr, "System Access is not active.");
 
 	ExitOnFalse(SAStopAudio(), hr, S_FALSE, "Silencing System Access failed.");
 LExit:
@@ -43,8 +43,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::SpeakText(BST
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be spoken was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be spoken was an empty string.");
 
-	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The System Access API could not be loaded.");
+	hr = IsProductActive();
+	ExitOnFailure(hr, "System Access is not active.");
 
 	if (silence == VARIANT_TRUE)
 	{
@@ -64,8 +64,8 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::BrailleText(B
 	ExitOnNull(text, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "A message to be brailled was not provided.");
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be brailled was an empty string.");
 
-	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The System Access API could not be loaded.");
+	hr = IsProductActive();
+	ExitOnFailure(hr, "System Access is not active.");
 
 	ExitOnFalse(SABraille(text), hr, S_FALSE, "brailling through System Access failed.");
 LExit:

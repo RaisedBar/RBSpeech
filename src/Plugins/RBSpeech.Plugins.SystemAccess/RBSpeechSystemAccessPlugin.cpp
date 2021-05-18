@@ -78,11 +78,8 @@ optional<wstring> RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::Get
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsAPILoaded()
 {
-	HRESULT hr = S_OK;
-	ExitOnFalse(isAPILoaded, hr, S_FALSE, "The NVDA API is not loaded.");
-LExit:
-	return hr;
-}
+	return isAPILoaded;
+	}
 
 HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 {

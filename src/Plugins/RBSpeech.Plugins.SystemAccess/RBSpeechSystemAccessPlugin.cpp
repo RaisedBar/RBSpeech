@@ -19,7 +19,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::IsProductActi
 {
 	HRESULT hr = S_OK;
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The System Access API could not be loaded.");
 
 	ExitOnFalse(SAIsRunning(), hr, S_FALSE, "System Access is not running.");
 LExit:
@@ -30,7 +30,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::Silence()
 {
 	HRESULT hr = S_OK;
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The System Access API could not be loaded.");
 
 	ExitOnFalse(SAStopAudio(), hr, S_FALSE, "Silencing System Access failed.");
 LExit:
@@ -44,13 +44,13 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::SpeakText(BST
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be spoken was an empty string.");
 
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The System Access API could not be loaded.");
 
 	if (silence == VARIANT_TRUE)
 	{
 		//Silence any existing speech.
 		hr = Silence();
-		ExitOnFailure(hr, "Unable to silence existing speech.");
+		ExitOnFailure(hr, "Unable to silence the existing speech from System Access.");
 	}
 
 	ExitOnFalse(SASpeak(text), hr, S_FALSE, "Speaking through System Access failed.");
@@ -65,7 +65,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::BrailleText(B
 	ExitOnSpecificValue(SysStringLen(text), 0, hr, __HRESULT_FROM_WIN32(ERROR_BAD_ARGUMENTS), "The message to be brailled was an empty string.");
 
 	hr = CheckAndLoadAPI();
-	ExitOnFailure(hr, "The NVDA API could not e loaded.");
+	ExitOnFailure(hr, "The System Access API could not be loaded.");
 
 	ExitOnFalse(SABraille(text), hr, S_FALSE, "brailling through System Access failed.");
 LExit:
@@ -92,13 +92,14 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	ExitOnSuccess(hr, "The System Access API is already loaded.");
 
 	hr = PathForCurrentProcess(&sczCurrentPath, NULL);
-	ExitOnFailure(hr, "Failed to get current process path.");
+	ExitOnFailure(hr, "Failed to get the current process path.");
 
 	SystemAccessDllFileName = sczCurrentPath;
 	if (SystemAccessDllFileName.has_filename())
 	{
 		SystemAccessDllFileName.remove_filename();
 	}
+
 	//Add the plugins folder hierarchy.
 	SystemAccessDllFileName /= L"plugins/SystemAccess";
 
@@ -106,7 +107,7 @@ HRESULT RaisedBar::RBSpeech::Plugins::CRBSpeechSystemAccessPlugin::LoadAPI()
 	SystemAccessDllFileName /= L"SAAPI32.dll";
 
 	//Check file existence.
-	ExitOnFalse(exists(SystemAccessDllFileName), hr, E_FILENOTFOUND, "The System Access dll file is not found.");
+	ExitOnFalse(exists(SystemAccessDllFileName), hr, E_FILENOTFOUND, "The System Access dll file could not be found.");
 
 	//The dll file exists, so try to load it.
 	SystemAccessDllApi.load(SystemAccessDllFileName.generic_wstring());
